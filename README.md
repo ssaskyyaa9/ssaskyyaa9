@@ -6,11 +6,11 @@
 <table align="center" width="100%">
 <tr>
 <td align="center">
-<!-- Statistik Stats + Total Commits -->
-<img src="https://github-readme-stats.vercel.app/api?username=ssaskyyaa9&show_icons=true&hide_title=true&hide_border=true&hide=stars,prs,issues,contribs&include_all_commits=true&theme=default" height="195"/>
+<!-- Total Commits dengan gaya Streak Stats -->
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=ssaskyyaa9&theme=default&hide_border=true&type=commits" height="195"/>
 </td>
 <td align="center">
-<!-- Streak Stats -->
+<!-- Current Streak -->
 <img src="https://github-readme-streak-stats.herokuapp.com/?user=ssaskyyaa9&theme=default&hide_border=true" height="195"/>
 </td>
 </tr>
@@ -23,5 +23,5 @@
 <br/>
 
 <div align="center">
-<sub>project · 2026 · open to feedback and pull requests</sub>
+<sub>PKL project · 2026 · open to feedback and pull requests</sub>
 </div>
