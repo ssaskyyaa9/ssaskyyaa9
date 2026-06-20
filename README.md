@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://skillicons.dev/icons?i=nextjs,react,express,nodejs,mysql,tailwind,vercel,figma&theme=light" />
+<img src="https://skillicons.dev/icons?i=html,nextjs,react,express,nodejs,mysql,tailwind,vercel,railway,docker,figma&theme=light" />
 </div>
 <br/>
 
