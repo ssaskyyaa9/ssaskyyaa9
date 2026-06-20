@@ -5,11 +5,11 @@
 
 <table align="center" width="100%">
 <tr>
-<td align="center">
-<!-- Total Commits dengan gaya Streak Stats -->
+<td align="center" width="50%">
+<!-- Total Commits -->
 <img src="https://github-readme-streak-stats.herokuapp.com/?user=ssaskyyaa9&theme=default&hide_border=true&type=commits" height="195"/>
 </td>
-<td align="center">
+<td align="center" width="50%">
 <!-- Current Streak -->
 <img src="https://github-readme-streak-stats.herokuapp.com/?user=ssaskyyaa9&theme=default&hide_border=true" height="195"/>
 </td>
