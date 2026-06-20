@@ -1,48 +1,5 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Poppins&size=24&duration=3000&pause=1000&color=F7768E&center=true&vCenter=true&width=500&lines=Student+%7C+PKL+Intern;Building+LaporApp+%F0%9F%93%8D;Next.js+%C2%B7+Express+%C2%B7+React+Native" alt="typing animation" />
-
-</div>
-
-<br/>
-
-<table align="center">
-<tr>
-<td width="55%" valign="top">
-
-### Currently
-
-Working on **LaporApp** — a full-stack community reporting platform, built as part of a school internship (PKL) project.
-
-```
-const stack = {
-  frontend : "Next.js",
-  backend  : "Express.js",
-  mobile   : "React Native (Expo)",
-  database : "MySQL (Aiven)",
-  hosting  : ["Vercel", "Railway"]
-};
-```
-
-- 🧩 Connecting a web admin panel, REST API, and mobile app into one system
-- 🎯 Learning how production deployments actually work — Vercel, Railway, env vars, the works
-- 📐 Currently also juggling linear algebra coursework alongside the build
-
-</td>
-<td width="45%" valign="top" align="center">
-
-<img src="https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/main/assets/coding.gif" width="320" alt="coding animation" onerror="this.style.display='none'"/>
-
-<sub>swap this gif link once you upload your own to a repo</sub>
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-<div align="center">
-
 <img src="https://skillicons.dev/icons?i=nextjs,react,express,nodejs,mysql,tailwind,vercel,figma&theme=light" />
 
 </div>
