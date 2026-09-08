@@ -4,7 +4,7 @@
 <div align="center">
   <img
     src="https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/activity-graph.svg"
-    width="120%"
+    width="150%"
   />
 </div>
 
