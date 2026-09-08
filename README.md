@@ -1,7 +1,10 @@
 <br/>
 
 <div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ssaskyyaa9&theme=github-compact&hide_border=true" width="90%"/>
+  <img
+    src="https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/activity-graph.svg"
+    width="90%"
+  />
 </div>
 
 <div align="center">
