@@ -20,12 +20,22 @@ jobs:
         uses: maurodesouza/github-readme-activity-graph-action@v1
         with:
           username: ssaskyyaa9
-          options: theme=github-compact&hide_border=true
+          options: >-
+            bg_color=fff7fb
+            &color=6b7280
+            &title_color=d946ef
+            &line=60a5fa
+            &point=ec4899
+            &area_color=dbeafe
+            &area=true
+            &hide_border=true
+            &radius=12
+            &height=300
           output_path: dist/activity-graph.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish graph
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
           target_branch: output
           build_dir: dist
