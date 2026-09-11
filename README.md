@@ -16,3 +16,11 @@
     width="100%"
   />
 </div>
+
+<!-- Repository Activity -->
+<div align="center">
+  <img
+    src="https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/repository-activity.svg"
+    width="100%"
+  />
+</div>
