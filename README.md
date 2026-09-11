@@ -6,7 +6,6 @@
     width="100%"
   />
 </div>
-
 <br/>
 
 <div align="center">
