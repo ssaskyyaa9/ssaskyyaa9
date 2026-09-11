@@ -1,5 +1,82 @@
 <br/>
 
+<!-- INTRODUCTION -->
+
+<div align="center">
+
+# Hi, I'm Saskya Tia
+
+Software Engineering student who enjoys building web and mobile applications.
+
+Currently learning and improving my skills through real-world projects.
+
+<br/>
+
+`JavaScript` · `Next.js` · `Flutter` · `SQL`
+
+</div>
+
+<br/>
+
+---
+
+## Selected Work
+
+<table>
+<tr>
+<td width="50%">
+
+### CRM Application
+
+A CRM application for managing prospects, customer data, dashboard statistics, and database records.
+
+`Flutter` · `Supabase`
+
+</td>
+
+<td width="50%">
+
+### Library Management System
+
+A web-based library system with authentication, role-based access, and database integration.
+
+`Next.js` · `MySQL` · `Tailwind CSS`
+
+</td>
+</tr>
+
+<tr>
+<td width="50%">
+
+### MyShop
+
+An e-commerce interface with product browsing, product details, shopping cart, and API integration.
+
+`JavaScript` · `Tailwind CSS` · `REST API`
+
+</td>
+
+<td width="50%">
+
+### Currently Learning
+
+`JavaScript`  
+`Next.js`  
+`Flutter`  
+`SQL`
+
+</td>
+</tr>
+</table>
+
+<br/>
+
+---
+
+## GitHub Activity
+
+<br/>
+
 <!-- Activity Graph -->
 <div align="center">
   <img
@@ -17,4 +94,17 @@
     width="80%"
   />
 </div>
+
+<br/>
+
+---
+
+## Let's Connect
+
+<div align="center">
+
+[GitHub](https://github.com/ssaskyyaa9) · [LinkedIn](LINKEDIN_KAMU)
+
+</div>
+
 <br/>
