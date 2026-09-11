@@ -10,6 +10,13 @@
 
 <br/>
 
+<div align="center">
+  <img
+    src="https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/github-journey.svg"
+    width="100%"
+  />
+</div>
+
 <!-- GitHub Streak -->
 <div align="center">
   <img
