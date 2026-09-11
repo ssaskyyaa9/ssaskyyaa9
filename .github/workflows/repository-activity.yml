@@ -1,0 +1,284 @@
+name: Generate Repository Activity
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Prepare output
+        run: |
+          mkdir -p dist
+
+          curl -L \
+            "https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/activity-graph.svg" \
+            -o dist/activity-graph.svg
+
+          curl -L \
+            "https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/github-journey.svg" \
+            -o dist/github-journey.svg
+
+      - name: Generate Repository Activity
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          username = "ssaskyyaa9"
+          token = os.environ["GITHUB_TOKEN"]
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                commitContributionsByRepository(maxRepositories: 100) {
+                  repository {
+                    name
+                    isFork
+                    isPrivate
+                  }
+                  contributions {
+                    totalCount
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          data = json.dumps({
+              "query": query,
+              "variables": {
+                  "login": username
+              }
+          }).encode()
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=data,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Content-Type": "application/json",
+                  "User-Agent": "github-repository-activity"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              result = json.loads(response.read())
+
+          if "errors" in result:
+              print(json.dumps(result["errors"], indent=2))
+              raise SystemExit("GitHub GraphQL request failed.")
+
+          repositories = (
+              result["data"]["user"]["contributionsCollection"]
+              ["commitContributionsByRepository"]
+          )
+
+          repos = []
+
+          for item in repositories:
+              repo = item["repository"]
+
+              if repo["isPrivate"]:
+                  continue
+
+              if repo["isFork"]:
+                  continue
+
+              count = item["contributions"]["totalCount"]
+
+              if count > 0:
+                  repos.append({
+                      "name": repo["name"],
+                      "count": count
+                  })
+
+          repos.sort(
+              key=lambda item: item["count"],
+              reverse=True
+          )
+
+          repos = repos[:8]
+
+          if not repos:
+              repos = [
+                  {
+                      "name": "No contributions yet",
+                      "count": 0
+                  }
+              ]
+
+          max_count = max(item["count"] for item in repos)
+          if max_count == 0:
+              max_count = 1
+
+          width = 1200
+          height = 180 + (len(repos) * 55)
+
+          svg = f'''<svg
+            width="{width}"
+            height="{height}"
+            viewBox="0 0 {width} {height}"
+            xmlns="http://www.w3.org/2000/svg">
+
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff7fb"/>
+                <stop offset="100%" stop-color="#f5f9ff"/>
+              </linearGradient>
+
+              <linearGradient id="pinkBlue" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ec4899"/>
+                <stop offset="100%" stop-color="#60a5fa"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Main Card -->
+            <rect
+              x="8"
+              y="8"
+              width="1184"
+              height="{height - 16}"
+              rx="28"
+              fill="url(#bg)"
+              stroke="#f3d8ec"
+              stroke-width="2"
+            />
+
+            <!-- Title -->
+            <text
+              x="60"
+              y="65"
+              font-family="Arial, sans-serif"
+              font-size="28"
+              font-weight="700"
+              fill="#334155">
+              Repository Activity
+            </text>
+
+            <text
+              x="60"
+              y="94"
+              font-family="Arial, sans-serif"
+              font-size="15"
+              fill="#94a3b8">
+              Your most active repositories based on GitHub contributions.
+            </text>
+
+            <!-- Decorative -->
+            <path
+              d="M1015 62 C1050 35 1090 90 1145 58"
+              fill="none"
+              stroke="url(#pinkBlue)"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          '''
+
+          start_y = 135
+
+          for index, repo in enumerate(repos):
+              y = start_y + (index * 55)
+
+              name = repo["name"]
+              count = repo["count"]
+
+              bar_width = int((count / max_count) * 850)
+
+              if bar_width < 8 and count > 0:
+                  bar_width = 8
+
+              svg += f'''
+              <!-- Repository {index + 1} -->
+              <text
+                x="65"
+                y="{y}"
+                font-family="Arial, sans-serif"
+                font-size="15"
+                font-weight="600"
+                fill="#475569">
+                {name}
+              </text>
+
+              <text
+                x="1135"
+                y="{y}"
+                text-anchor="end"
+                font-family="Arial, sans-serif"
+                font-size="14"
+                font-weight="700"
+                fill="#ec4899">
+                {count} commits
+              </text>
+
+              <rect
+                x="65"
+                y="{y + 12}"
+                width="850"
+                height="12"
+                rx="6"
+                fill="#e5f0ff"
+              />
+
+              <rect
+                x="65"
+                y="{y + 12}"
+                width="{bar_width}"
+                height="12"
+                rx="6"
+                fill="url(#pinkBlue)"
+              />
+              '''
+
+          svg += '''
+            <!-- Bottom decoration -->
+            <circle
+              cx="1080"
+              cy="''' + str(height - 38) + '''"
+              r="5"
+              fill="#fbcfe8"
+            />
+
+            <circle
+              cx="1100"
+              cy="''' + str(height - 38) + '''"
+              r="5"
+              fill="#bfdbfe"
+            />
+
+          </svg>
+          '''
+
+          with open(
+              "dist/repository-activity.svg",
+              "w",
+              encoding="utf-8"
+          ) as file:
+              file.write(svg)
+
+          print("\nRepository Activity:")
+          for repo in repos:
+              print(f"- {repo['name']}: {repo['count']} commits")
+          PY
+
+      - name: Publish to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
