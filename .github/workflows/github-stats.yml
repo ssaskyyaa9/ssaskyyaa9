@@ -1,0 +1,310 @@
+name: Generate GitHub Stats
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download existing activity graph
+        run: |
+          mkdir -p dist
+          curl -L \
+            "https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/activity-graph.svg" \
+            -o dist/activity-graph.svg
+
+      - name: Generate GitHub Journey
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 <<'PY'
+          import json
+          import os
+          import urllib.request
+          from datetime import date, timedelta
+
+          username = "ssaskyyaa9"
+          token = os.environ["GITHUB_TOKEN"]
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      contributionCount
+                      date
+                    }
+                  }
+                }
+              }
+            }
+          }
+          """
+
+          data = json.dumps({
+              "query": query,
+              "variables": {"login": username}
+          }).encode()
+
+          request = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=data,
+              headers={
+                  "Authorization": f"Bearer {token}",
+                  "Content-Type": "application/json",
+                  "User-Agent": "github-stats"
+              }
+          )
+
+          with urllib.request.urlopen(request) as response:
+              result = json.loads(response.read())
+
+          calendar = result["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+
+          total = calendar["totalContributions"]
+
+          days = []
+          for week in calendar["weeks"]:
+              for day in week["contributionDays"]:
+                  days.append({
+                      "date": day["date"],
+                      "count": day["contributionCount"]
+                  })
+
+          days.sort(key=lambda x: x["date"])
+
+          longest = 0
+          current = 0
+          streak = 0
+
+          for day in days:
+              if day["count"] > 0:
+                  streak += 1
+                  longest = max(longest, streak)
+              else:
+                  streak = 0
+
+          for day in reversed(days):
+              if day["count"] > 0:
+                  current += 1
+              else:
+                  break
+
+          start_date = next(
+              (d["date"] for d in days if d["count"] > 0),
+              ""
+          )
+
+          end_date = next(
+              (d["date"] for d in reversed(days) if d["count"] > 0),
+              ""
+          )
+
+          def esc(text):
+              return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+          svg = f'''<svg width="1200" height="360" viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg">
+
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fff7fb"/>
+              <stop offset="100%" stop-color="#f5f9ff"/>
+            </linearGradient>
+
+            <linearGradient id="pinkBlue" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#ec4899"/>
+              <stop offset="100%" stop-color="#60a5fa"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="8" y="8" width="1184" height="344"
+                rx="24"
+                fill="url(#bg)"
+                stroke="#f3d8ec"
+                stroke-width="2"/>
+
+          <text x="55" y="68"
+                font-family="Arial, sans-serif"
+                font-size="28"
+                font-weight="700"
+                fill="#334155">
+            My GitHub Journey
+          </text>
+
+          <text x="55" y="98"
+                font-family="Arial, sans-serif"
+                font-size="16"
+                fill="#94a3b8">
+            Small steps, consistent progress.
+          </text>
+
+          <!-- Decorative line -->
+          <path d="M1040 55 C1080 25 1110 90 1150 55"
+                fill="none"
+                stroke="url(#pinkBlue)"
+                stroke-width="3"
+                stroke-linecap="round"/>
+
+          <!-- CARD 1 -->
+          <rect x="45" y="135" width="345" height="170"
+                rx="20"
+                fill="#fff8fc"
+                stroke="#f6cde8"
+                stroke-width="2"/>
+
+          <circle cx="92" cy="185" r="25" fill="#fce7f3"/>
+
+          <text x="92" y="194"
+                text-anchor="middle"
+                font-family="Arial, sans-serif"
+                font-size="22"
+                fill="#ec4899">
+            ♡
+          </text>
+
+          <text x="135" y="190"
+                font-family="Arial, sans-serif"
+                font-size="38"
+                font-weight="700"
+                fill="#ec4899">
+            {total}
+          </text>
+
+          <text x="135" y="222"
+                font-family="Arial, sans-serif"
+                font-size="16"
+                font-weight="600"
+                fill="#475569">
+            Total Contributions
+          </text>
+
+          <text x="135" y="250"
+                font-family="Arial, sans-serif"
+                font-size="13"
+                fill="#94a3b8">
+            GitHub contributions
+          </text>
+
+          <!-- CARD 2 -->
+          <rect x="427" y="135" width="345" height="170"
+                rx="20"
+                fill="#f7fbff"
+                stroke="#cfe3ff"
+                stroke-width="2"/>
+
+          <circle cx="474" cy="185" r="25" fill="#e5f0ff"/>
+
+          <text x="474" y="194"
+                text-anchor="middle"
+                font-family="Arial, sans-serif"
+                font-size="22"
+                fill="#60a5fa">
+            ✦
+          </text>
+
+          <text x="517" y="190"
+                font-family="Arial, sans-serif"
+                font-size="38"
+                font-weight="700"
+                fill="#60a5fa">
+            {current}
+          </text>
+
+          <text x="517" y="222"
+                font-family="Arial, sans-serif"
+                font-size="16"
+                font-weight="600"
+                fill="#475569">
+            Current Streak
+          </text>
+
+          <text x="517" y="250"
+                font-family="Arial, sans-serif"
+                font-size="13"
+                fill="#94a3b8">
+            Consecutive contribution days
+          </text>
+
+          <!-- CARD 3 -->
+          <rect x="809" y="135" width="345" height="170"
+                rx="20"
+                fill="#fff8fc"
+                stroke="#f6cde8"
+                stroke-width="2"/>
+
+          <circle cx="856" cy="185" r="25" fill="#fce7f3"/>
+
+          <text x="856" y="194"
+                text-anchor="middle"
+                font-family="Arial, sans-serif"
+                font-size="22"
+                fill="#ec4899">
+            ✦
+          </text>
+
+          <text x="899" y="190"
+                font-family="Arial, sans-serif"
+                font-size="38"
+                font-weight="700"
+                fill="#ec4899">
+            {longest}
+          </text>
+
+          <text x="899" y="222"
+                font-family="Arial, sans-serif"
+                font-size="16"
+                font-weight="600"
+                fill="#475569">
+            Longest Streak
+          </text>
+
+          <text x="899" y="250"
+                font-family="Arial, sans-serif"
+                font-size="13"
+                fill="#94a3b8">
+            Best contribution streak
+          </text>
+
+          <!-- Bottom decoration -->
+          <path d="M45 305 C100 275 130 335 190 305"
+                fill="none"
+                stroke="#dbeafe"
+                stroke-width="4"
+                stroke-linecap="round"/>
+
+          <path d="M1010 305 C1060 275 1090 335 1150 305"
+                fill="none"
+                stroke="#fbcfe8"
+                stroke-width="4"
+                stroke-linecap="round"/>
+
+          </svg>'''
+
+          with open("dist/github-journey.svg", "w", encoding="utf-8") as f:
+              f.write(svg)
+
+          print(f"Total Contributions: {total}")
+          print(f"Current Streak: {current}")
+          print(f"Longest Streak: {longest}")
+          PY
+
+      - name: Publish to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
