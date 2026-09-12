@@ -16,18 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Prepare output
-        run: |
-          mkdir -p dist
-
-          curl -L \
-            "https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/activity-graph.svg" \
-            -o dist/activity-graph.svg
-
-          curl -L \
-            "https://raw.githubusercontent.com/ssaskyyaa9/ssaskyyaa9/output/github-journey.svg" \
-            -o dist/github-journey.svg
-
       - name: Generate Repository Activity
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,6 +24,7 @@ jobs:
           import json
           import os
           import urllib.request
+          import html
 
           username = "ssaskyyaa9"
           token = os.environ["GITHUB_TOKEN"]
@@ -123,6 +112,7 @@ jobs:
               ]
 
           max_count = max(item["count"] for item in repos)
+
           if max_count == 0:
               max_count = 1
 
@@ -147,7 +137,6 @@ jobs:
               </linearGradient>
             </defs>
 
-            <!-- Main Card -->
             <rect
               x="8"
               y="8"
@@ -159,7 +148,6 @@ jobs:
               stroke-width="2"
             />
 
-            <!-- Title -->
             <text
               x="60"
               y="65"
@@ -179,7 +167,6 @@ jobs:
               Your most active repositories based on GitHub contributions.
             </text>
 
-            <!-- Decorative -->
             <path
               d="M1015 62 C1050 35 1090 90 1145 58"
               fill="none"
@@ -194,7 +181,7 @@ jobs:
           for index, repo in enumerate(repos):
               y = start_y + (index * 55)
 
-              name = repo["name"]
+              name = html.escape(repo["name"])
               count = repo["count"]
 
               bar_width = int((count / max_count) * 850)
@@ -203,7 +190,6 @@ jobs:
                   bar_width = 8
 
               svg += f'''
-              <!-- Repository {index + 1} -->
               <text
                 x="65"
                 y="{y}"
@@ -244,24 +230,25 @@ jobs:
               />
               '''
 
-          svg += '''
-            <!-- Bottom decoration -->
+          svg += f'''
             <circle
               cx="1080"
-              cy="''' + str(height - 38) + '''"
+              cy="{height - 38}"
               r="5"
               fill="#fbcfe8"
             />
 
             <circle
               cx="1100"
-              cy="''' + str(height - 38) + '''"
+              cy="{height - 38}"
               r="5"
               fill="#bfdbfe"
             />
 
           </svg>
           '''
+
+          os.makedirs("dist", exist_ok=True)
 
           with open(
               "dist/repository-activity.svg",
@@ -275,10 +262,24 @@ jobs:
               print(f"- {repo['name']}: {repo['count']} commits")
           PY
 
-      - name: Publish to output branch
-        uses: crazy-max/ghaction-github-pages@v3.1.0
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Repository Activity
+        run: |
+          git clone --branch output \
+            https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git output-branch
+
+          cp dist/repository-activity.svg \
+            output-branch/repository-activity.svg
+
+          cd output-branch
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add repository-activity.svg
+
+          if git diff --cached --quiet; then
+            echo "No changes to repository activity."
+          else
+            git commit -m "Update repository activity"
+            git push origin output
+          fi
