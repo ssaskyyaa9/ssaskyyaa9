@@ -1,0 +1,383 @@
+<svg
+  width="1200"
+  height="620"
+  viewBox="0 0 1200 620"
+  xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7fb"/>
+      <stop offset="100%" stop-color="#f5f9ff"/>
+    </linearGradient>
+
+    <linearGradient id="pinkBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+
+  <rect
+    x="8"
+    y="8"
+    width="1184"
+    height="604"
+    rx="28"
+    fill="url(#bg)"
+    stroke="#f3d8ec"
+    stroke-width="2"
+  />
+
+  <text
+    x="60"
+    y="65"
+    font-family="Arial, sans-serif"
+    font-size="28"
+    font-weight="700"
+    fill="#334155">
+    Repository Activity
+  </text>
+
+  <text
+    x="60"
+    y="94"
+    font-family="Arial, sans-serif"
+    font-size="15"
+    fill="#94a3b8">
+    Your most active repositories based on GitHub contributions.
+  </text>
+
+  <path
+    d="M1015 62 C1050 35 1090 90 1145 58"
+    fill="none"
+    stroke="url(#pinkBlue)"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+
+    <text
+      x="65"
+      y="135"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      LaporApp
+    </text>
+
+    <text
+      x="1135"
+      y="135"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      59 commits
+    </text>
+
+    <rect
+      x="65"
+      y="147"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="147"
+      width="850"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="190"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      ssaskyyaa9
+    </text>
+
+    <text
+      x="1135"
+      y="190"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      56 commits
+    </text>
+
+    <rect
+      x="65"
+      y="202"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="202"
+      width="806"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="245"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      crm-app
+    </text>
+
+    <text
+      x="1135"
+      y="245"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      18 commits
+    </text>
+
+    <rect
+      x="65"
+      y="257"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="257"
+      width="259"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="300"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      My-PORTOFOLIO
+    </text>
+
+    <text
+      x="1135"
+      y="300"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      14 commits
+    </text>
+
+    <rect
+      x="65"
+      y="312"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="312"
+      width="201"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="355"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      todo-zustand
+    </text>
+
+    <text
+      x="1135"
+      y="355"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      9 commits
+    </text>
+
+    <rect
+      x="65"
+      y="367"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="367"
+      width="129"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="410"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      Kalkulator
+    </text>
+
+    <text
+      x="1135"
+      y="410"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      7 commits
+    </text>
+
+    <rect
+      x="65"
+      y="422"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="422"
+      width="100"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="465"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      NoteAppMobile
+    </text>
+
+    <text
+      x="1135"
+      y="465"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      6 commits
+    </text>
+
+    <rect
+      x="65"
+      y="477"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="477"
+      width="86"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+    <text
+      x="65"
+      y="520"
+      font-family="Arial, sans-serif"
+      font-size="15"
+      font-weight="600"
+      fill="#475569">
+      MYSHOP-e-commerce
+    </text>
+
+    <text
+      x="1135"
+      y="520"
+      text-anchor="end"
+      font-family="Arial, sans-serif"
+      font-size="14"
+      font-weight="700"
+      fill="#ec4899">
+      6 commits
+    </text>
+
+    <rect
+      x="65"
+      y="532"
+      width="850"
+      height="12"
+      rx="6"
+      fill="#e5f0ff"
+    />
+
+    <rect
+      x="65"
+      y="532"
+      width="86"
+      height="12"
+      rx="6"
+      fill="url(#pinkBlue)"
+    />
+    
+  <circle
+    cx="1080"
+    cy="582"
+    r="5"
+    fill="#fbcfe8"
+  />
+
+  <circle
+    cx="1100"
+    cy="582"
+    r="5"
+    fill="#bfdbfe"
+  />
+
+</svg>
